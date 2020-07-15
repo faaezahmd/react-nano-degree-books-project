@@ -1,8 +1,8 @@
 import React from 'react';
 import BookTop from './BookTop';
+import PropTypes from 'prop-types';
 
 class Book extends React.Component {
-
     render() {
         return (
             <div className="book">
@@ -12,6 +12,14 @@ class Book extends React.Component {
             </div>
         )
     }
+}
+
+Book.propTypes = {
+    bookCoverURL: PropTypes.string,
+    updateShelf: PropTypes.func,
+    currentShelf: PropTypes.string,
+    title: PropTypes.string,
+    authorName: PropTypes.string
 }
 
 export default Book;
