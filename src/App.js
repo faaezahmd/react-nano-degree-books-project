@@ -3,7 +3,7 @@ import React from "react";
 import "./App.css";
 import Book from "./components/Book";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { update, getAll } from "./BooksAPI";
+import { update, getAll, search } from "./BooksAPI";
 import MainPage from "./Pages/MainPage";
 import SearchPage from "./Pages/SearchPage";
 
@@ -18,20 +18,30 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false,
+    search: {
+      query: null,
+      books: []
+    },
   };
 
   componentDidMount() {
     getAll().then((books) => {
-      this.setState({
-        isLoading: false,
-        books,
-      });
+      if(books.error) {
+        this.setState({
+          isLoading: false,
+          books: []
+        });
+      } else {
+        this.setState({
+          isLoading: false,
+          books,
+        });
+      }
     });
   }
 
   updateShelf = (book, shelf) => {
     if (shelf === "none") return;
-
     this.setState(
       {
         isLoading: true,
@@ -47,8 +57,29 @@ class BooksApp extends React.Component {
         });
       }
     );
-    // console.log(event.currentTarget.value);
   };
+
+  setSearchQuery = (event) => {
+    const query = event.currentTarget.value;
+    if(query) {
+      search(query)
+      .then(books => {
+        this.setState({
+          search: { 
+            books,
+            query 
+          }
+        })
+      })
+    } else {
+      this.setState({
+        search: {   
+          books: [],
+          query: null
+        }
+      })
+    }
+  }
 
   render() {
     const currentlyReading = this.state.books.filter(
@@ -64,7 +95,7 @@ class BooksApp extends React.Component {
       <div className="app">
         <Router>
           <Switch>
-            <Route exact path="/search" render={() => <SearchPage />} />
+            <Route exact path="/search" render={() => <SearchPage search={this.state.search} updateShelf={this.updateShelf} setSearchQuery={this.setSearchQuery}/>} />
             <Route
               exact
               path="/"
