@@ -15,7 +15,7 @@ class Book extends React.Component {
 }
 
 Book.propTypes = {
-    bookCoverURL: PropTypes.string,
+    bookCoverURL: PropTypes.object,
     updateShelf: PropTypes.func,
     currentShelf: PropTypes.string,
     title: PropTypes.string,

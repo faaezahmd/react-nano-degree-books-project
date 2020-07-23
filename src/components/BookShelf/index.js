@@ -1,5 +1,6 @@
 import React from "react";
 import Book from '../Book';
+import PropTypes from 'prop-types';
 
 class BookShelf extends React.Component {
   render() {
@@ -10,12 +11,12 @@ class BookShelf extends React.Component {
           <ol className="books-grid">
             {this.props.isLoading
               ? "Loading ..."
-              : this.props.books.map((book) => {
+              : this.props.books.map((book, index) => {
                   return (
-                    <li>
+                    <li key={index}>
                       {/* TODO: Display all authors name */}
                       <Book
-                        bookCoverURL={book.imageLinks.smallThumbnail}
+                        bookCoverURL={book.imageLinks}
                         title={book.title}
                         authorName={book.authors[0]}
                         updateShelf={(shelf) =>
@@ -31,6 +32,13 @@ class BookShelf extends React.Component {
       </div>
     );
   }
+}
+
+BookShelf.propTypes = {
+  books: PropTypes.array,
+  shelfTitle: PropTypes.string,
+  updateShelf: PropTypes.func,
+  isLoading: PropTypes.bool
 }
 
 export default BookShelf;

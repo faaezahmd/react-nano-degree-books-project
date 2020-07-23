@@ -13,7 +13,7 @@ function BookTop(props) {
 }
 
 BookTop.propTypes = {
-    bookCoverURL: PropTypes.string,
+    bookCoverURL: PropTypes.object,
     updateShelf: PropTypes.func,
     currentShelf: PropTypes.string
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { debounce } from 'debounce';
 import Book from "../components/Book";
 
 class SearchPage extends React.Component {
@@ -41,7 +40,7 @@ class SearchPage extends React.Component {
                       <li key={index}>
                         {/* TODO: Display all authors name */}
                         <Book
-                          bookCoverURL={book.imageLinks.smallThumbnail}
+                          bookCoverURL={book.imageLinks}
                           title={book.title}
                           authorName={book.authors && book.authors.join(', ')}
                           updateShelf={(shelf) =>
